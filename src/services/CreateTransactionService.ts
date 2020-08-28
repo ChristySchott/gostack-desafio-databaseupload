@@ -14,9 +14,14 @@ interface Request {
 class CreateTransactionService {
   public async execute({ title, value, type, category_id }: Request): Promise<Transaction> {
     const transactionsRepository = getCustomRepository(TransactionsRepository);
+    const balance = await transactionsRepository.getBalance()
 
     if (type !== 'income' && type !== 'outcome') {
       throw new AppError('Type should be income or outcome.');
+    }
+
+    if (type === 'outcome' && value > balance.income) {
+      throw new AppError('Insufficient funds.');
     }
 
     const transaction = transactionsRepository.create({
