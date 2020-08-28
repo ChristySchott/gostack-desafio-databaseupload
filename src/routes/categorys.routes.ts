@@ -2,9 +2,9 @@ import { Router } from 'express';
 
 import CreateCategoryService from '../services/CreateCategoryService';
 
-const usersRouter = Router();
+const categorysRouter = Router();
 
-usersRouter.post('/', async (request, response) => {
+categorysRouter.post('/', async (request, response) => {
   try {
     const { title } = request.body;
 
@@ -20,4 +20,4 @@ usersRouter.post('/', async (request, response) => {
   }
 })
 
-export default usersRouter;
+export default categorysRouter;
