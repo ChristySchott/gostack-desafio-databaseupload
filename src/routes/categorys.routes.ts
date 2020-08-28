@@ -1,41 +1,23 @@
 import { Router } from 'express';
 
+import CreateCategoryService from '../services/CreateCategoryService';
+
 const usersRouter = Router();
 
 usersRouter.post('/', async (request, response) => {
   try {
     const { title } = request.body;
 
-    const createUser = new CreateUserService();
+    const createCategory = new CreateCategoryService();
 
-    const user = await createUser.execute({
-      name,
-      email,
-      password,
+    const category = await createCategory.execute({
+      title
     });
 
-    delete user.password;
-
-    return response.json(user);
+    return response.json(category);
   } catch (error) {
     return response.status(400).json({ error: error.message })
   }
 })
 
-usersRouter.patch('/avatar',
-  ensureAuthenticated,
-  upload.single('avatar'),
-  async (request, response) => {
-    const updateUserAvatar = new UpdateUserAvatarService();
-
-    const user = await updateUserAvatar.execute({
-      user_id: request.user.id,
-      avatarFilename: request.file.filename,
-    })
-
-    delete user.password;
-
-    return response.json(user);
-  })
-
-export default usersRouter
+export default usersRouter;
