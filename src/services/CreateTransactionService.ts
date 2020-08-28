@@ -9,11 +9,11 @@ interface Request {
   title: string;
   value: number;
   type: 'income' | 'outcome';
-  category_id: string;
+  category: string;
 }
 
 class CreateTransactionService {
-  public async execute({ title, value, type, category_id }: Request): Promise<Transaction> {
+  public async execute({ title, value, type, category }: Request): Promise<Transaction> {
     const transactionsRepository = getCustomRepository(TransactionsRepository);
 
     const categoriesRepository = getRepository(Category);
@@ -26,7 +26,7 @@ class CreateTransactionService {
 
     if (!categoryAlreadyExists) {
       categoryAlreadyExists = categoriesRepository.create({
-        id: category_id,
+        id: category,
       });
 
       await categoriesRepository.save(categoryAlreadyExists);
@@ -35,7 +35,7 @@ class CreateTransactionService {
     const { total } = await transactionsRepository.getBalance();
 
     const transactionCategoryAlreadyExists = await transactionsRepository.findOne({
-      where: category_id,
+      where: category,
     });
 
     if (transactionCategoryAlreadyExists) {
@@ -54,7 +54,6 @@ class CreateTransactionService {
       title,
       value,
       type,
-      category_id
     })
 
     await transactionsRepository.save(transaction);
