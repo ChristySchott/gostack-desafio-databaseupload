@@ -18,14 +18,18 @@ class CreateTransactionService {
 
     const categoriesRepository = getRepository(Category);
 
-    const categoryAlreadyExists = await categoriesRepository.findOne({
+    let categoryAlreadyExists = await categoriesRepository.findOne({
       where: {
-        id: category_id
+        title: title,
       }
     })
 
-    if (categoryAlreadyExists) {
+    if (!categoryAlreadyExists) {
+      categoryAlreadyExists = categoriesRepository.create({
+        id: category_id,
+      });
 
+      await categoriesRepository.save(categoryAlreadyExists);
     }
 
     const { total } = await transactionsRepository.getBalance();
