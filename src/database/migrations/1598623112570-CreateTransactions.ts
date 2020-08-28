@@ -48,7 +48,7 @@ export default class CreateTransactions1598623112570 implements MigrationInterfa
     )
 
     await queryRunner.createForeignKey(
-      'appointments',
+      'transactions',
       new TableForeignKey({
         name: 'TransactionCategory',
         columnNames: ['category_id'],
