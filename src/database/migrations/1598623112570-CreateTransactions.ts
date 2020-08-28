@@ -20,7 +20,9 @@ export default class CreateTransactions1598623112570 implements MigrationInterfa
           },
           {
             name: 'value',
-            type: 'int',
+            type: 'decimal',
+            precision: 10,
+            scale: 2,
           },
           {
             name: 'type',
