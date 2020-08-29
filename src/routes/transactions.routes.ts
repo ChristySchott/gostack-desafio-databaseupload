@@ -34,15 +34,13 @@ transactionsRouter.post('/', async (request, response) => {
 });
 
 transactionsRouter.delete('/:id', async (request, response) => {
-  const { id } = request.query;
+  const { id } = request.params;
 
   const deleteTransaction = new DeleteTransactionService();
 
-  const parsedId = id as string;
+  await deleteTransaction.execute(id);
 
-  const transaction = await deleteTransaction.execute({ id: parsedId });
-
-  return response.json(transaction);
+  return response.status(204).send();
 });
 
 transactionsRouter.post('/import', async (request, response) => {

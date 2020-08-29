@@ -4,21 +4,17 @@ import Transaction from '../models/Transaction';
 import TransactionsRepository from '../repositories/TransactionsRepository';
 import AppError from '../errors/AppError';
 
-interface Request {
-  id: string;
-}
-
 class DeleteTransactionService {
-  public async execute({ id }: Request): Promise<DeleteResult> {
+  public async execute(id: string): Promise<void> {
     const transactionsRepository = getCustomRepository(TransactionsRepository)
 
-    const deleteTransaction = await transactionsRepository.delete(id)
+    const transaction = await transactionsRepository.findOne(id)
 
-    if (!(await deleteTransaction).affected) {
+    if (!transaction) {
       throw new AppError('Transaction not deleted, ID not found.');
     }
 
-    return deleteTransaction;
+    await transactionsRepository.remove(transaction);
   }
 }
 
