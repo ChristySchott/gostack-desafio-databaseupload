@@ -31,13 +31,15 @@ class CreateTransactionService {
       await categoryRepository.save(transactionCategory);
     }
 
+    const { total } = await transactionsRepository.getBalance();
+
+    if (type === 'outcome' && value > total) {
+      throw new AppError('Insufficient funds.');
+    }
+
     if (type !== 'income' && type !== 'outcome') {
       throw new AppError('Type should be income or outcome.');
     }
-
-    // if (type === 'outcome' && value > total) {
-    // throw new AppError('Insufficient funds.');
-    // }
 
     const transaction = transactionsRepository.create({
       title,
