@@ -13,14 +13,14 @@ class CreateUserService {
 
     const checkCategoryExists = await categorysRepository.findOne({
       where: { title },
-    })
+    });
 
     if (checkCategoryExists) {
       throw new AppError('Category address already used.');
     }
 
     const category = categorysRepository.create({
-      title
+      title,
     });
 
     await categorysRepository.save(category);

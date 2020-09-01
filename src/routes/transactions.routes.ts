@@ -32,10 +32,10 @@ transactionsRouter.post('/', async (request, response) => {
     title,
     value,
     type,
-    category
-  })
+    category,
+  });
 
-  return response.json(transaction)
+  return response.json(transaction);
 });
 
 transactionsRouter.delete('/:id', async (request, response) => {
@@ -57,6 +57,7 @@ transactionsRouter.post(
     const transactions = await importTransactions.execute(request.file.path);
 
     return response.json(transactions);
-  });
+  },
+);
 
 export default transactionsRouter;

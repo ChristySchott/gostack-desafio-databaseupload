@@ -13,7 +13,12 @@ interface Request {
 }
 
 class CreateTransactionService {
-  public async execute({ title, value, type, category }: Request): Promise<Transaction> {
+  public async execute({
+    title,
+    value,
+    type,
+    category,
+  }: Request): Promise<Transaction> {
     const transactionsRepository = getCustomRepository(TransactionsRepository);
     const categoryRepository = getRepository(Category);
 
@@ -45,8 +50,8 @@ class CreateTransactionService {
       title,
       value,
       type,
-      category: transactionCategory
-    })
+      category: transactionCategory,
+    });
 
     await transactionsRepository.save(transaction);
 

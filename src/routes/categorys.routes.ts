@@ -11,13 +11,13 @@ categorysRouter.post('/', async (request, response) => {
     const createCategory = new CreateCategoryService();
 
     const category = await createCategory.execute({
-      title
+      title,
     });
 
     return response.json(category);
   } catch (error) {
-    return response.status(400).json({ error: error.message })
+    return response.status(400).json({ error: error.message });
   }
-})
+});
 
 export default categorysRouter;
